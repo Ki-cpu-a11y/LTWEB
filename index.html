@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Tin Sách</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        form {
+            max-width: 500px;
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+        .error {
+            color: red;
+            margin-bottom: 16px;
+        }
+        input[type="submit"] {
+            background-color: #000000;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #000000;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            let isValid = true;
+            let errors = "";
+
+            // Lấy giá trị từ các trường input
+            const name = document.getElementById('name').value;
+            const author = document.getElementById('author').value;
+            const publisher = document.getElementById('publisher').value;
+            const year = document.getElementById('year').value;
+
+            // Validate tên sách
+            if (name.trim() === "") {
+                errors += "Book name is required.\n";
+                isValid = false;
+            }
+
+            // Validate tên tác giả
+            if (author.trim() === "") {
+                errors += "Author name is required.\n";
+                isValid = false;
+            }
+
+            // Validate nhà xuất bản
+            if (publisher.trim() === "") {
+                errors += "Publisher name is required.\n";
+                isValid = false;
+            }
+
+            // Validate năm xuất bản
+            if (year.trim() === "" || isNaN(year) || year.length !== 4) {
+                errors += "Valid publication year is required (4 digits).\n";
+                isValid = false;
+            }
+
+            // Hiển thị lỗi nếu có
+            if (!isValid) {
+                alert(errors);
+                return false;
+            } else {
+                // Nếu không có lỗi, chuyển dữ liệu đến trang kết quả
+                const queryString = `?name=${encodeURIComponent(name)}&author=${encodeURIComponent(author)}&publisher=${encodeURIComponent(publisher)}&year=${encodeURIComponent(year)}`;
+                window.location.href = "result.html" + queryString;
+                return false; // Ngăn chặn việc submit form mặc định
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Nhập Thông Tin Sách</h1>
+    <form onsubmit="return validateForm()">
+        <label for="name">Tên Sách:</label>
+        <input type="text" id="name" name="name">
+
+        <label for="author">Tác giả:</label>
+        <input type="text" id="author" name="author">
+
+        <label for="publisher">Nhà xuất bản:</label>
+        <input type="text" id="publisher" name="publisher">
+
+        <label for="year">Năm sản xuất:</label>
+        <input type="text" id="year" name="year">
+
+        <input type="submit" value="Gửi">
+    </form>
+
+</body>
+</html>
